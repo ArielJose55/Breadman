@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'application'
+
+version = '1.0.0'
+
+mainClassName = 'breadman.Breadman'
+
+dependencies {
+	compile 'log4j:log4j:1.2.14'
+	compile 'org.jfree:jfreechart:1.0.19'
+	compile 'org.jvnet.substance:substance:4.3'
+	compile 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.5.2'
+    testCompile 'junit:junit:4.12'
+}
+
+task createJar << {
+	manifest {
+        attributes("Implementation-Title": "Breadman",
+                   "Implementation-Version": version,
+                   "Main-Class": "breadman.Breadman")
+
+    }
+    archiveName= 'Breadman.jar'
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+repositories {
+	mavenCentral()
+    jcenter()
+    maven { url 'http://repository.jspresso.org/maven2/'}
+}

@@ -1,2 +1,4 @@
-bulid/
+build/
 test/
+/bin/
+/.gradle/
